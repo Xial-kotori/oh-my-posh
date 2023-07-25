@@ -3,14 +3,23 @@
   "blocks": [
     {
       "alignment": "left",
+      "newline": true,
       "segments": [
         {
           "background": "#d3d7cf",
           "foreground": "#000000",
-          "leading_diamond": "\u256d\u2500\ue0b2",
+          "leading_diamond": "\u256d\u2500",
           "style": "diamond",
           "template": " {{ if .WSL }}WSL at {{ end }}{{.Icon}} ",
           "type": "os"
+        },
+        {
+          "background": "#ffd75f",
+          "foreground": "#000000",
+          "powerline_symbol": "\ue0b0",
+          "style": "powerline",
+          "template": " {{ .UserName }} {{ if .Root }}\uf0ad {{ end }}",
+          "type": "session"
         },
         {
           "background": "#3465a4",
@@ -51,6 +60,21 @@
       "alignment": "right",
       "segments": [
         {
+          "background": "#000000",
+          "background_templates": [
+            "{{ if gt .Code 0 }}#cc2222{{ end }}"
+          ],
+          "foreground": "#d3d7cf",
+          "invert_powerline": true,
+          "powerline_symbol": "\ue0b2",
+          "properties": {
+            "always_enabled": true
+          },
+          "style": "powerline",
+          "template": " {{ if gt .Code 0 }}{{ reason .Code }}{{ else }}\u2714{{ end }} ",
+          "type": "status"
+        },
+        {
           "background": "#689f63",
           "foreground": "#ffffff",
           "invert_powerline": true,
@@ -85,19 +109,6 @@
           "style": "powerline",
           "template": " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} \ue624 ",
           "type": "julia"
-        },
-        {
-          "background": "#FFDE57",
-          "foreground": "#111111",
-          "invert_powerline": true,
-          "powerline_symbol": "\ue0b2",
-          "properties": {
-            "display_mode": "files",
-            "fetch_virtual_env": false
-          },
-          "style": "powerline",
-          "template": " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} \ue235 ",
-          "type": "python"
         },
         {
           "background": "#AE1401",
@@ -141,15 +152,6 @@
           "type": "aws"
         },
         {
-          "background": "#ffff66",
-          "foreground": "#111111",
-          "invert_powerline": true,
-          "powerline_symbol": "\ue0b2",
-          "style": "powerline",
-          "template": " \uf0ad ",
-          "type": "root"
-        },
-        {
           "background": "#c4a000",
           "foreground": "#000000",
           "invert_powerline": true,
@@ -159,19 +161,16 @@
           "type": "executiontime"
         },
         {
-          "background": "#000000",
-          "background_templates": [
-            "{{ if gt .Code 0 }}#cc2222{{ end }}"
-          ],
-          "foreground": "#d3d7cf",
+          "background": "#306998",
+          "foreground": "#000000",
+          "properties": {
+            "home_enabled": true
+          },
           "invert_powerline": true,
           "powerline_symbol": "\ue0b2",
-          "properties": {
-            "always_enabled": true
-          },
           "style": "powerline",
-          "template": " {{ if gt .Code 0 }}{{ reason .Code }}{{ else }}\u2714{{ end }} ",
-          "type": "status"
+          "template": " \ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ end }}",
+          "type": "python"
         },
         {
           "background": "#d3d7cf",
@@ -179,7 +178,6 @@
           "invert_powerline": true,
           "style": "diamond",
           "template": " {{ .CurrentDate | date .Format }} \uf017 ",
-          "trailing_diamond": "\ue0b0\u2500\u256e",
           "type": "time"
         }
       ],
@@ -197,17 +195,6 @@
         }
       ],
       "type": "prompt"
-    },
-    {
-      "segments": [
-        {
-          "foreground": "#d3d7cf",
-          "style": "plain",
-          "template": "\u2500\u256f",
-          "type": "text"
-        }
-      ],
-      "type": "rprompt"
     }
   ],
   "console_title_template": "{{ .Shell }} in {{ .Folder }}",
